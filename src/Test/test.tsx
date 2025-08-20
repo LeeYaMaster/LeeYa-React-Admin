@@ -15,15 +15,9 @@ import DatePickerCombo from "@/components/myComponents/datePickerCombo";
 import { z } from "zod";
 import dayjs from "dayjs";
 
-enum GenderEnum {
-  female = "female",
-  male = "male",
-  other = "other",
-}
-
 interface IFormInput {
-  firstName: string;
-  gender: GenderEnum;
+  username: string;
+  date: Date;
 }
 function Test() {
   const form = useForm<IFormInput>();

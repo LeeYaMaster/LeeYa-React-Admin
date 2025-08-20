@@ -18,6 +18,7 @@
     "clsx": "^2.1.1",
     "commitizen": "^4.3.1",
     "dayjs": "^1.11.13",
+    "lint-staged": "^16.1.5",
     "lucide-react": "^0.540.0",
     "radix-ui": "^1.4.3",
     "react": "^18.3.1",
