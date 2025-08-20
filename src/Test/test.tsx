@@ -11,28 +11,27 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import DatePickerCombo from "@/components/myComponents/datePickerCombo";
-
+import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod";
-import dayjs from "dayjs";
 
 interface IFormInput {
   username: string;
   date: Date;
 }
+
+const schema = z.object({
+  username: z.string({ message: "Username cannot be empty" }).min(1, "Username cannot be empty"),
+  date: z.date({ message: "Date cannot be empty" }),
+});
+console.log(schema.safeParse({ username: "", date: new Date() }));
+export type schemaType = z.infer<typeof schema>;
+
 function Test() {
-  const form = useForm<IFormInput>();
+  const form = useForm<schemaType>({
+    resolver: zodResolver(schema),   // 仅此一行！
+  });
+
   const onSubmit = (data: IFormInput) => {
-
-    const schema = z.object({
-      username: z.string().min(1, "Username不能为空"),
-      date: z.date({ message: "日期不能为空" }),
-    });
-
-    const result = schema.safeParse(data);
-    if (!result.success) {
-      console.log("Form validation failed: " + JSON.stringify(result.error.format(), null, 2));
-      return;
-    }
     console.log(data);
   };
 
@@ -65,11 +64,15 @@ function Test() {
             control={form.control}
             name="date"
             render={({ field }) => {
-              if (!field.value) {
-                field.onChange(dayjs().toDate());
-              }
+              // if (!field.value) {
+              //   field.onChange(dayjs().toDate());
+              // }
               return (
-                <DatePickerCombo field={field} />
+                <>
+                  <FormLabel>Date</FormLabel>
+                  <DatePickerCombo field={field} />
+                  <FormMessage />
+                </>
               );
             }}
           />
