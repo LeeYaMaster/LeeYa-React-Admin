@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import CreateForm from "@/lib/createForm";
 
 interface IFormInput {
   username: string;
@@ -92,126 +93,8 @@ function Test() {
 
   return (
     <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="shadcn"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => {
-              // if (!field.value) {
-              //   field.onChange(dayjs().toDate());
-              // }
-              return (
-                <>
-                  <FormLabel>Date</FormLabel>
-                  <DatePickerCombo field={field} />
-                  <FormMessage />
-                </>
-              );
-            }}
-          /> */}
-          <FormField
-            control={form.control}
-            name="gender"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Gender</FormLabel>
-                <FormControl>
-                  <div className="flex space-x-4">
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
-                      <FormControl>
-                        <RadioGroupItem value="male" id="gender-male" />
-                      </FormControl>
-                      <FormLabel htmlFor="gender-male">Male</FormLabel>
-
-                      <FormControl>
-                        <RadioGroupItem value="female" id="gender-female" />
-                      </FormControl>
-                      <FormLabel htmlFor="gender-female">Female</FormLabel>
-                    </RadioGroup>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {form.watch("gender") === "male" && (
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a country" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="china">China</SelectItem>
-                        <SelectItem value="usa">USA</SelectItem>
-                        <SelectItem value="uk">UK</SelectItem>
-                        <SelectItem value="france">France</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-          {form.watch("country") === "china" && form.watch("gender") === "male" && (
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="选择城市" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="beijing">北京</SelectItem>
-                        <SelectItem value="shanghai">上海</SelectItem>
-                        <SelectItem value="guangzhou">广州</SelectItem>
-                        <SelectItem value="shenzhen">深圳</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
+        <CreateForm />
+ 
     </>
   );
 }
