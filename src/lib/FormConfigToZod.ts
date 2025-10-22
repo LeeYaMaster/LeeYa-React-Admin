@@ -11,7 +11,6 @@ export function formConfigToZodSchema(formConfig: IFormField[]) {
         if (field.required) {
           baseSchema[field.name] = z
             .string({ message: `${field.label} cannot be empty` })
-            .min(1, `${field.label} cannot be empty`);
         } else {
           baseSchema[field.name] = z.string().optional();
         }

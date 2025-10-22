@@ -5,6 +5,7 @@ import { z } from "zod";
 import type { IFormField } from "@/Test/testFormConfig";
 import CreateFormView from "./createFormView";
 
+export type schemaType = z.infer<typeof schema>;
 function CreateForm({
   schema,
   formConfig,
@@ -14,7 +15,7 @@ function CreateForm({
   formConfig: IFormField[];
   submitForm: (data: any) => void;
 }) {
-  type schemaType = z.infer<typeof schema>;
+  
 
   const form = useForm<schemaType>({
     resolver: zodResolver(schema),

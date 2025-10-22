@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { UseFormReturn } from "react-hook-form";
-import type { schemaType } from "./createForm";
+import type { schemaType } from "@/lib/createForm";
 import type { IFormField } from "@/Test/testFormConfig";
 
 function CreateFormView({
