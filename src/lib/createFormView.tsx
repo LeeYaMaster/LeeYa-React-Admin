@@ -31,6 +31,9 @@ function CreateFormView({
   handleFormSubmit: (data: schemaType) => void;
 }) {
   console.log(form);
+
+  const watchedValues = form.watch();
+
   const createFieldsView = () => {
     return (
       <>
@@ -87,8 +90,14 @@ function CreateFormView({
                     key={option.value}
                     className="flex items-center space-x-2"
                   >
-                    <RadioGroupItem value={option.value} id={`${fieldItem.name}-${option.value}`} />
-                    <FormLabel htmlFor={`${fieldItem.name}-${option.value}`} className="!m-0 !cursor-pointer">
+                    <RadioGroupItem
+                      value={option.value}
+                      id={`${fieldItem.name}-${option.value}`}
+                    />
+                    <FormLabel
+                      htmlFor={`${fieldItem.name}-${option.value}`}
+                      className="!m-0 !cursor-pointer"
+                    >
                       {option.label}
                     </FormLabel>
                   </FormItem>
@@ -108,32 +117,34 @@ function CreateFormView({
   ) => {
     return (
       <>
-        <FormField
-          control={form.control}
-          name={fieldItem.name}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{fieldItem.label}</FormLabel>
-              <FormControl>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger>
-                    <SelectValue
-                      placeholder={fieldItem.placeholder ?? "Select a value"}
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {fieldItem.options?.map((option) => (
-                      <SelectItem value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {fieldItem.when?.(watchedValues) && (
+          <FormField
+            control={form.control}
+            name={fieldItem.name}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{fieldItem.label}</FormLabel>
+                <FormControl>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={fieldItem.placeholder ?? "Select a value"}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fieldItem.options?.map((option) => (
+                        <SelectItem value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
       </>
     );
   };

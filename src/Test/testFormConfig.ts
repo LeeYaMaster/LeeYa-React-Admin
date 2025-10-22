@@ -4,6 +4,12 @@ export interface IFormField {
   type: "input" | "radio" | "select";
   options?: { label: string; value: string }[];
   placeholder?: string;
+  when?: (data: any) => boolean;
+  validateRules?: {
+    when: (data: any) => boolean;
+    message: string;
+  }[];
+  required?: boolean;
 }
 export const testFormConfig: IFormField[] = [
   {
@@ -31,6 +37,13 @@ export const testFormConfig: IFormField[] = [
       { label: "UK", value: "uk" },
       { label: "France", value: "france" },
     ],
+    when: (data) => data.gender === "male",
+    validateRules: [
+      {
+        when: (data: any) => data.gender === "male" && !data.country,
+        message: "If gender is 'male', country is required.",
+      },
+    ],
   },
   {
     name: "city",
@@ -42,5 +55,15 @@ export const testFormConfig: IFormField[] = [
       { label: "Guangzhou", value: "guangzhou" },
       { label: "Shenzhen", value: "shenzhen" },
     ],
+    when: (data) => data.country === "china" && data.gender === "male",
+    validateRules: [
+      {
+        when: (data: any) => data.country === "china" && !data.city,
+        message: "If country is 'china', city is required.",
+      },
+    ],
   },
 ];
+
+
+
