@@ -6,20 +6,30 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function MyTable<TData, TValue>({
@@ -33,7 +43,7 @@ export function MyTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-  })
+  });
 
   return (
     <div className="rounded-md border">
@@ -76,7 +86,48 @@ export function MyTable<TData, TValue>({
             </TableRow>
           )}
         </TableBody>
+        <TableFooter className="flex justify-end w-full">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    aria-disabled={!table.getCanPreviousPage()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      table.previousPage();
+                    }}
+                  />
+                </PaginationItem>
+                {table.getPageCount() > 0 &&
+                  Array.from({ length: table.getPageCount() }).map((_, i) => (
+                    <PaginationItem key={i}>
+                      <PaginationLink
+                        href="#"
+                        isActive={table.getState().pagination.pageIndex === i}
+                        onClick={e => {
+                          e.preventDefault();
+                          table.setPageIndex(i);
+                        }}
+                      >
+                        {i + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    aria-disabled={!table.getCanNextPage()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      table.nextPage();
+                    }}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+        </TableFooter>
       </Table>
     </div>
-  )
+  );
 }
